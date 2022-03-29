@@ -1,4 +1,4 @@
-# Egyszerű játék
+# Egyszerű játék példaprogram
 
 ## A játék eredete
 

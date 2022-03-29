@@ -31,7 +31,7 @@ template <class T> constexpr T ABS(T x) { return (x < 0 ? -x : x); }
 
 int main(int argc,char** argv)
 {
-	SZAMOSSAGTIPUS i,n, j,m,m2;
+	SZAMOSSAGTIPUS i,n, j,m;
 	CSUCSLISTA csucsok; LAPLISTA lapok;
 	ofstream outFile;
 
@@ -47,11 +47,11 @@ int main(int argc,char** argv)
 	IGAZSAGTIPUS sikeres=true;
 
 	clog.precision(16);
-	clog << pi_temp << endl;
+	//clog << pi_temp << endl;
 
 	if (argc > 2)
 	{
-		SZAMOSSAGTIPUS temp1=atoi(argv[1]), temp2=atoi(argv[2]);
+		KOORDINATATIPUS temp1=atoi(argv[1]), temp2=atoi(argv[2]);
 		if ((temp2 - temp1) >= spiral_C_AB_diff_min)
 			spiral_C_A = temp1, spiral_C_B = temp2;
 	}
@@ -61,7 +61,7 @@ int main(int argc,char** argv)
 
 	if (argc > 4)
 	{
-		SZAMOSSAGTIPUS temp1=atoi(argv[3]), temp2=atoi(argv[4]);
+		KOORDINATATIPUS temp1=atoi(argv[3]), temp2=atoi(argv[4]);
 		if ((temp1 > 0) && (temp2 > 0))
 			spiral_C_r1 = temp1, spiral_C_r2 = temp2;
 	}
@@ -81,18 +81,18 @@ int main(int argc,char** argv)
 		KOORDINATATIPUS x=spiral_C_r1 * cos(ang1 * spiral_C_menet_N);
 		KOORDINATATIPUS y=spiral_C_r1 * sin(ang1 * spiral_C_menet_N);
 		KOORDINATATIPUS z=spiral_C_A + i * spiral_C_AB_tng;
-		LENULLAZ(x, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-		LENULLAZ(y, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-		LENULLAZ(z, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+		//LENULLAZ(x, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+		//LENULLAZ(y, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+		//LENULLAZ(z, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
 		for (j=0;j<m;j++)
 		{
 			KOORDINATATIPUS ang2=2*pi_temp * ((KOORDINATATIPUS)j/m) - pi_temp;
 			KOORDINATATIPUS x2=spiral_C_r2 * sin(ang1) * cos(ang2);
 			KOORDINATATIPUS y2=spiral_C_r2 * sin(ang1) * sin(ang2);
 			KOORDINATATIPUS z2=spiral_C_r2 * cos(ang1);
-			LENULLAZ(x2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-			LENULLAZ(y2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-			LENULLAZ(z2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			//LENULLAZ(x2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			//LENULLAZ(y2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			//LENULLAZ(z2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
 			UJ_CSUCS_3D(csucsok, x + x2,y + y2,z + z2);
 		}
 	}
