@@ -1,15 +1,19 @@
 # Spiráltórusz genetátor példaprogram
 
+## Forrás
+
+A felhasznált formátumról: http://paulbourke.net/dataformats/obj/
+A tórusz koordinátáiról (angolul): https://en.wikipedia.org/wiki/Toroidal_and_poloidal_coordinates
+
 ## Használata
 
 A generáláshoz szükséges paraméterek:
- 1. "spiral_C_A"
- 2. "spiral_C_B"
-(spiral_C_B - spiral_C_A >= spiral_C_AB_diff_min)
- 3. "spiral_C_r1" (> 0)
- 4. "spiral_C_r2" (> 0)
- 5. "spiral_C_N" (>= spiral_C_N_min)
- 6. "spiral_C_menet_N"
- 7. "spiral_kor_N" (>= spiral_kor_N_min)
+ 1. a spirál kezdő Z-koordinátája
+ 2. a spirál végző Z-koordinátája
+ 3. a spirál toroid sugara
+ 4. a spirál poloid sugara
+ 5. a spirál toroid sűrűsége
+ 6. a spirál meneteinek a száma
+ 7. a spirál poloid sűrűsége
 
-A kimeneti modellfájl:
+A kimeneti fájl: a program paraméterei alapján kigenerált Wavefront-formátumú 3D-s modell csúcsokkal és négyszöglapokkal.
