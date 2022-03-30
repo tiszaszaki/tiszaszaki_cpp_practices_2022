@@ -9,11 +9,13 @@ http://aszt.inf.elte.hu/~hunlaci/gyakorlat2011t/gy08H.pdf
 ### A program paraméterei
  1. nyelvtan-fájl
  2. felismerendő szó
- 3. kimeneti fájl
+ 3. kimeneti fájl (opcionális)
 
 ### Példa futtatásra
 
 `> CYK_algoritmus_2021.exe CF_nyelv_3.txt 128+384 CF_nyelv_3.log`
+
+`> CYK_algoritmus_2021.exe REG_nyelv.txt 128`
 
 ## A paraméterek leírása
 
@@ -48,4 +50,4 @@ Egy karakterlánc, amire a levezetési fát felépítjük a megadott nyelvtan al
 
 ### A kimeneti fájl
 
-A kimeneti fájl elérési útvonala. A fájl elején a nyelvtan-fájl feldolgozásának a megjelenítése történik. A második felében a levezetés ún. CYK-táblában (a fájlban mátrixként) jelenik meg, amelynek a balfelső cellája tartalmazza az eldöntéshez szükséges szimbólumok halmazát. Rész-szavak felismeréséhez tárolja a mátrix többi cellájában is a levezetéskor felfedezett nemterminálisokat is. A végén pedig kiírja a felismerés eredményét, azaz "elfogadva" vagy "elutasitva". Utána pedig kiírja a felismert szót, esetleg azokat a rész-szavakat, amelyek kiolvashatóak a kitöltött mátrixból. Azon cellákból, amelyekben a kezdőszimbólum szerepel, az indexei segítségével a rész-szó eleje és vége meghatározható. Elutasított felismerés esetén is előfordulnak elfogadott rész-szavak.
+A kimeneti fájl elérési útvonala. A fájl elején a nyelvtan-fájl feldolgozásának a megjelenítése történik. A második felében a levezetés ún. CYK-táblában (a fájlban mátrixként) jelenik meg, amelynek a balfelső cellája tartalmazza az eldöntéshez szükséges szimbólumok halmazát Rész-szavak felismeréséhez tárolja a mátrix többi cellájában is a levezetéskor felfedezett nemterminálisokat is. A végén pedig kiírja a felismerés eredményét, azaz "elfogadva" vagy "elutasitva". Utána pedig kiírja a felismert szót, esetleg azokat a rész-szavakat, amelyek kiolvashatóak a kitöltött mátrixból. Azon cellákból, amelyekben a kezdőszimbólum szerepel, az indexei segítségével a rész-szó eleje és vége meghatározható. Csak a bemeneti szó elfogadása esetén lesznek kiíratva a felismert rész-szavak is.
