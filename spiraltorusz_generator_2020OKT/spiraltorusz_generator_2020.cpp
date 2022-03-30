@@ -47,11 +47,13 @@ int main(int argc,char** argv)
 	IGAZSAGTIPUS sikeres=true;
 
 	clog.precision(16);
-	//clog << pi_temp << endl;
 
-	if (argc > 2)
+	if (argc > 1)
+		fajlnev = argv[1];
+
+	if (argc > 3)
 	{
-		KOORDINATATIPUS temp1=atoi(argv[1]), temp2=atoi(argv[2]);
+		KOORDINATATIPUS temp1=atoi(argv[2]), temp2=atoi(argv[3]);
 		if ((temp2 - temp1) >= spiral_C_AB_diff_min)
 			spiral_C_A = temp1, spiral_C_B = temp2;
 	}
@@ -59,16 +61,16 @@ int main(int argc,char** argv)
 	spiral_C_AB_diff = spiral_C_B - spiral_C_A;
 	spiral_C_AB_tng = spiral_C_AB_diff / (KOORDINATATIPUS)spiral_C_N;
 
-	if (argc > 4)
+	if (argc > 5)
 	{
-		KOORDINATATIPUS temp1=atoi(argv[3]), temp2=atoi(argv[4]);
+		KOORDINATATIPUS temp1=atoi(argv[4]), temp2=atoi(argv[5]);
 		if ((temp1 > 0) && (temp2 > 0))
 			spiral_C_r1 = temp1, spiral_C_r2 = temp2;
 	}
 
-	if (argc > 7)
+	if (argc > 8)
 	{
-		SZAMOSSAGTIPUS temp1=atoi(argv[5]), temp2=atoi(argv[6]), temp3=atoi(argv[7]);
+		SZAMOSSAGTIPUS temp1=atoi(argv[6]), temp2=atoi(argv[7]), temp3=atoi(argv[8]);
 		if ((temp1 >= spiral_C_N_min) && (temp2 > 0) && (temp3 >= spiral_kor_N_min))
 			spiral_C_N = temp1, spiral_C_menet_N = temp2, spiral_kor_N = temp3;
 	}
@@ -79,21 +81,19 @@ int main(int argc,char** argv)
 	{
 		KOORDINATATIPUS ang1=2*pi_temp * ((KOORDINATATIPUS)i/n);
 		KOORDINATATIPUS x=spiral_C_r1 * cos(ang1 * spiral_C_menet_N);
-		KOORDINATATIPUS y=spiral_C_r1 * sin(ang1 * spiral_C_menet_N);
-		KOORDINATATIPUS z=spiral_C_A + i * spiral_C_AB_tng;
-		//LENULLAZ(x, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-		//LENULLAZ(y, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-		//LENULLAZ(z, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+		KOORDINATATIPUS z=spiral_C_r1 * sin(ang1 * spiral_C_menet_N);
+		KOORDINATATIPUS y=spiral_C_A + i * spiral_C_AB_tng;
 		for (j=0;j<m;j++)
 		{
 			KOORDINATATIPUS ang2=2*pi_temp * ((KOORDINATATIPUS)j/m) - pi_temp;
-			KOORDINATATIPUS x2=spiral_C_r2 * sin(ang1) * cos(ang2);
-			KOORDINATATIPUS y2=spiral_C_r2 * sin(ang1) * sin(ang2);
-			KOORDINATATIPUS z2=spiral_C_r2 * cos(ang1);
-			//LENULLAZ(x2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-			//LENULLAZ(y2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-			//LENULLAZ(z2, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
-			UJ_CSUCS_3D(csucsok, x + x2,y + y2,z + z2);
+			KOORDINATATIPUS x2=spiral_C_r2 * sin(ang2) * cos(ang1);
+			KOORDINATATIPUS y2=spiral_C_r2 * sin(ang2) * sin(ang1);
+			KOORDINATATIPUS z2=spiral_C_r2 * cos(ang2);
+			KOORDINATATIPUS x3=x + x2, y3=y + y2, z3=z + z2;
+			LENULLAZ(x3, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			LENULLAZ(y3, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			LENULLAZ(z3, KOORDINATATIPUS, myEPS<KOORDINATATIPUS>());
+			UJ_CSUCS_3D(csucsok, x3,y3,z3);
 		}
 	}
 	for (i=0;i<n;i++)
@@ -152,7 +152,7 @@ int main(int argc,char** argv)
 		}
 	}
 	else
-		clog << "Fájlkezelési hiba!" << endl;
+		clog << "Fajlkezelesi hiba!" << endl;
 
 	outFile.close();
 
