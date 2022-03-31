@@ -9,13 +9,14 @@
 #include <thread>
 #include <mutex>
 #include <functional>
+#include <conio.h>
 
 using namespace std;
 
 // // típusok
 
 #define PALYAMERETTIPUS unsigned int
-#define SZAMOSSAGTIPUS unsigned int
+#define SZAMOSSAGTIPUS int
 #define PALYAELEMTIPUS int
 #define IDOMERTEKTIPUS unsigned int
 #define IRANYTIPUS unsigned int
@@ -230,40 +231,46 @@ void bekeretezPalya(PALYATIPUS & palya,PALYAMERETTIPUS n,PALYAMERETTIPUS m,ELEMG
 	}
 }
 
+void kitoltPalya(PALYATIPUS & palya,PALYAMERETTIPUS n,PALYAMERETTIPUS m,ELEMGYUJTTIPUS e1,ELEMGYUJTTIPUS e2);
+
 void szetszorPalyan(PALYATIPUS & palya,PALYAMERETTIPUS n,PALYAMERETTIPUS m,ELEMGYUJTTIPUS e1,ELEMGYUJTTIPUS e2,SZAMOSSAGTIPUS db)
 {
-	SZAMOSSAGTIPUS k=0;
-	unsigned int l=0;
-	unsigned int N=16;
-	if (n*m<=palya.size())
-	while ((k<db)&&(l<N))
+	if (db < 0) kitoltPalya(palya,n,m,e1,e2);
+	else
 	{
-		PALYAMERETTIPUS i=veletlenErtek<PALYAMERETTIPUS>(0,n-1);
-		PALYAMERETTIPUS j=veletlenErtek<PALYAMERETTIPUS>(0,m-1);
-		IGAZSAGTIPUS b=palya[PALYALINEARIS(i,j,n,m)]==URES;
-		if (e2.size()>1)
+		SZAMOSSAGTIPUS k=0;
+		unsigned int l=0;
+		unsigned int N2=16;
+		if (n*m<=palya.size())
+		while ((k<db)&&(l<N2))
 		{
-			b=KERESPALYAELEM(e2,palya,i,j,n,m);
-		}
-		else
-		{
-			if (e2.size()==1) b=palya[PALYALINEARIS(i,j,n,m)]==e2[0];
-		}
-		if (b)
-		{
-			PALYAELEMTIPUS e=LEVEGO;
-			if (e1.size()>1) e=e1[veletlenErtek<PALYAELEMTIPUS>(0,e1.size()-1)];
+			PALYAMERETTIPUS i=veletlenErtek<PALYAMERETTIPUS>(0,n-1);
+			PALYAMERETTIPUS j=veletlenErtek<PALYAMERETTIPUS>(0,m-1);
+			IGAZSAGTIPUS b=palya[PALYALINEARIS(i,j,n,m)]==URES;
+			if (e2.size()>1)
+			{
+				b=KERESPALYAELEM(e2,palya,i,j,n,m);
+			}
 			else
 			{
-				if (e1.size()==1) e=e1[0];
+				if (e2.size()==1) b=palya[PALYALINEARIS(i,j,n,m)]==e2[0];
 			}
-			palya[PALYALINEARIS(i,j,n,m)]=e;
-			k++;
-			l=0;
-		}
-		else
-		{
-			l++;
+			if (b)
+			{
+				PALYAELEMTIPUS e=LEVEGO;
+				if (e1.size()>1) e=e1[veletlenErtek<PALYAELEMTIPUS>(0,e1.size()-1)];
+				else
+				{
+					if (e1.size()==1) e=e1[0];
+				}
+				palya[PALYALINEARIS(i,j,n,m)]=e;
+				k++;
+				l=0;
+			}
+			else
+			{
+				l++;
+			}
 		}
 	}
 }
@@ -660,49 +667,32 @@ template <class R> SZAMOSSAGTIPUS randGenInd(vector<R> valsegek)
 
 void billentyuszal(PALYATIPUS & palya,PALYAMERETTIPUS n,PALYAMERETTIPUS m,MASZKVEKTORTIPUS & maszkok, IGAZSAGTIPUS & kiir_e, IGAZSAGTIPUS & loop,mutex & io_mutex,ostream & logstr)
 {
-	#define FEL_KOD 83
-	#define LE_KOD 84
-	#define BALRA_KOD 79
-	#define JOBBRA_KOD 89
-	#define SEMMI_KOD 0
-	#define KILEP_KOD 110
+	#define FEL_KOD 'W'
+	#define LE_KOD 'S'
+	#define BALRA_KOD 'A'
+	#define JOBBRA_KOD 'D'
+	#define SEMMI_KOD '\0'
+	#define KILEP_KOD 'X'
 	vector<BILLIRANYITTIPUS> billentyuk({FEL_KOD,LE_KOD,BALRA_KOD,JOBBRA_KOD,SEMMI_KOD,KILEP_KOD});
 	vector<TARTOMANYTIPUS> valsegek({10,10,10,10,20,1});
-
-	BILLIRANYITTIPUS c;
+	
 	while (loop)
 	{
-		SZAMOSSAGTIPUS i=0;
-		/*
+		//SZAMOSSAGTIPUS i=randGenInd<TARTOMANYTIPUS>(valsegek);
+		BILLIRANYITTIPUS c=0;//c=billentyuk[i];
 		io_mutex.lock();
-		system("stty raw");
-		cin >> c;
-		system("stty -raw");
+		c = getch();
+		cout << "\"" << c << "\"" << endl;
 		io_mutex.unlock();
-		*/
-		c=0;
 		switch (toupper(c))
 		{
-			case 0:
-			{
-				i=randGenInd<TARTOMANYTIPUS>(valsegek);
-				c=billentyuk[i];
-				switch (toupper(c))
-				{
-					case FEL_KOD : { EMBERMOZOG(FEL); kiir_e=true; break; }
-					case LE_KOD : { EMBERMOZOG(LE); kiir_e=true; break; }
-					case BALRA_KOD : { EMBERMOZOG(BALRA); kiir_e=true; break; }
-					case JOBBRA_KOD : { EMBERMOZOG(JOBBRA); kiir_e=true; break; }
-					case KILEP_KOD : { loop=false; break; }
-					default: break;
-				}
-				break;
-			}
+			case FEL_KOD : { EMBERMOZOG(FEL); kiir_e=true; break; }
+			case LE_KOD : { EMBERMOZOG(LE); kiir_e=true; break; }
+			case BALRA_KOD : { EMBERMOZOG(BALRA); kiir_e=true; break; }
+			case JOBBRA_KOD : { EMBERMOZOG(JOBBRA); kiir_e=true; break; }
+			case KILEP_KOD : { loop=false; break; }
 			default: break;
 		}
-		io_mutex.lock();
-		clog << i << endl;
-		io_mutex.unlock();
 		this_thread::sleep_for(1s);
 	}
 }
